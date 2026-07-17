@@ -1,42 +1,47 @@
-module alu(input a,b,output add,sub,multiple,division);
+module alu(input [2:0]a,
+input [2:0]b,
+output reg[3:0]add,
+output reg[3:0]sub,
+output reg[3:0]multiple,
+output reg[3:0]division);
 
-task add_;
-input x,y;
-output z;
+task add1;
+input [2:0]x,y;
+output [3:0]z;
 begin 
 z=x+y;
 end
 endtask
 
-task sub_;
-input x,y;
-output z;
+task sub1;
+input [2:0]x,y;
+output [3:0]z;
 begin
 z=x-y;
 end
 endtask
 
-task multiple_;
-input x,y;
-output z;
+task multiple1;
+input [2:0]x,y;
+output [3:0]z;
 begin
 z=x*y;
 end
 endtask
 
-task division_;
-input x,y;
-output z;
+task division1;
+input [2:0]x,y;
+output [3:0]z;
 begin
 z=x/y;
 end
 endtask
 
-initial begin 
-add_(a,b,add);
-sub_(a,b,sub);
-multiple_(a,b,multiple);
-division_(a,b,division);
+always@(*) begin 
+add1(a,b,add);
+sub1(a,b,sub);
+multiple1(a,b,multiple);
+division1(a,b,division);
 end
 
 endmodule

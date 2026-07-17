@@ -1,0 +1,25 @@
+module alu_tb;
+reg add,sub,multiple,division;
+wire a,b;
+
+alu tb(.a(a),.b(b),.add(add),.sub(sub),.multiple(multiple),.division(division));
+
+initial begin
+a=14;
+b=4;
+
+add_(a,b,add);
+$display("a=%0d,b=%0d,add=%0d",a,b,add);
+
+sub_(a,b,sub);
+$display("a=%0d,b=%0d,sub=%0d",a,b,sub);
+
+multiple_(a,b,multiple);
+$display("a=%0d,b=%0d,multiple=%0d",a,b,multiple);
+
+division_(a,b,division);
+$display("a=%0d,b=%0d,division=%0d",a,b,division);
+
+end
+
+endmodule
