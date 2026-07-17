@@ -1,0 +1,21 @@
+module alu_tb;
+wire [3:0]add;
+wire [3:0]sub;
+wire [3:0]multi;
+wire [3:0]div;
+reg [2:0]a;
+reg [2:0]b;
+
+alu tb(.a(a),.b(b),.add(add),.sub(sub),.multi(multi),.div(div));
+
+initial begin
+a=011;
+b=001;
+
+$monitor("a=%0b,b=%0b,add=%0b,sub=%0b,multi=%0b,div=%0b",a,b,add,sub,multi,div);
+
+
+#30$finish;
+end
+
+endmodule

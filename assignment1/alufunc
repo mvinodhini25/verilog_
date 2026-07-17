@@ -1,0 +1,39 @@
+module alu(input [2:0]a,b,output [3:0]add,sub,multi,div);
+
+function [3:0]add1;
+input [2:0]x,y;
+
+begin
+add1=x+y;
+end
+endfunction
+
+function [3:0]sub1;
+input [2:0]x,y;
+begin
+sub1=x-y;
+end
+endfunction
+
+function [3:0]multi1;
+input [2:0]x,y;
+begin
+multi1=x*y;
+end
+endfunction
+
+function [3:0]div1;
+input [2:0]x,y;
+begin
+div1=x/y;
+end
+endfunction
+
+assign add = add1(a,b);
+assign sub = sub1(a,b);
+assign multi = multi1(a,b);
+assign div = div1(a,b);
+
+endmodule
+
+
