@@ -1,0 +1,42 @@
+module alu(input a,b,output add,sub,multiple,division);
+
+task add_;
+input x,y;
+output z;
+begin 
+z=x+y;
+end
+endtask
+
+task sub_;
+input x,y;
+output z;
+begin
+z=x-y;
+end
+endtask
+
+task multiple_;
+input x,y;
+output z;
+begin
+z=x*y;
+end
+endtask
+
+task division_;
+input x,y;
+output z;
+begin
+z=x/y;
+end
+endtask
+
+initial begin 
+add_(a,b,add);
+sub_(a,b,sub);
+multiple_(a,b,multiple);
+division_(a,b,division);
+end
+
+endmodule
