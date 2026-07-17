@@ -1,4 +1,4 @@
-module decoder2to4(input a,b,output y);
+module decoder2to4(input wire a,b,output reg y);
 always@(*) begin 
 if(a==0 && b==0)
 y = 0001;
