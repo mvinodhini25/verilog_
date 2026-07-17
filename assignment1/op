@@ -1,0 +1,104 @@
+#! /usr/bin/vvp
+:ivl_version "12.0 (stable)";
+:ivl_delay_selection "TYPICAL";
+:vpi_time_precision + 0;
+:vpi_module "/usr/lib/x86_64-linux-gnu/ivl/system.vpi";
+:vpi_module "/usr/lib/x86_64-linux-gnu/ivl/vhdl_sys.vpi";
+:vpi_module "/usr/lib/x86_64-linux-gnu/ivl/vhdl_textio.vpi";
+:vpi_module "/usr/lib/x86_64-linux-gnu/ivl/v2005_math.vpi";
+:vpi_module "/usr/lib/x86_64-linux-gnu/ivl/va_math.vpi";
+S_0x55ee972d49d0 .scope module, "alu_tb" "alu_tb" 2 1;
+ .timescale 0 0;
+v0x55ee972ec370_0 .var "a", 2 0;
+v0x55ee972ec450_0 .net "add", 3 0, L_0x55ee972ec8b0;  1 drivers
+v0x55ee972ec520_0 .var "b", 2 0;
+v0x55ee972ec620_0 .net "div", 3 0, L_0x55ee972ecc60;  1 drivers
+v0x55ee972ec6f0_0 .net "multi", 3 0, L_0x55ee972ecb50;  1 drivers
+v0x55ee972ec7e0_0 .net "sub", 3 0, L_0x55ee972eca40;  1 drivers
+S_0x55ee972d4b60 .scope module, "tb" "alu" 2 9, 3 1 0, S_0x55ee972d49d0;
+ .timescale 0 0;
+    .port_info 0 /INPUT 3 "a";
+    .port_info 1 /INPUT 3 "b";
+    .port_info 2 /OUTPUT 4 "add";
+    .port_info 3 /OUTPUT 4 "sub";
+    .port_info 4 /OUTPUT 4 "multi";
+    .port_info 5 /OUTPUT 4 "div";
+v0x55ee972ebcf0_0 .net "a", 2 0, v0x55ee972ec370_0;  1 drivers
+v0x55ee972ebdf0_0 .net "add", 3 0, L_0x55ee972ec8b0;  alias, 1 drivers
+v0x55ee972ebed0_0 .net "b", 2 0, v0x55ee972ec520_0;  1 drivers
+v0x55ee972ebfc0_0 .net "div", 3 0, L_0x55ee972ecc60;  alias, 1 drivers
+v0x55ee972ec0a0_0 .net "multi", 3 0, L_0x55ee972ecb50;  alias, 1 drivers
+v0x55ee972ec1d0_0 .net "sub", 3 0, L_0x55ee972eca40;  alias, 1 drivers
+L_0x55ee972ec8b0 .ufunc/vec4 TD_alu_tb.tb.add1, 4, v0x55ee972ec370_0, v0x55ee972ec520_0 (v0x55ee972ead90_0, v0x55ee972eae70_0) S_0x55ee97296490;
+L_0x55ee972eca40 .ufunc/vec4 TD_alu_tb.tb.sub1, 4, v0x55ee972ec370_0, v0x55ee972ec520_0 (v0x55ee972ebb20_0, v0x55ee972ebc00_0) S_0x55ee972eb840;
+L_0x55ee972ecb50 .ufunc/vec4 TD_alu_tb.tb.multi1, 4, v0x55ee972ec370_0, v0x55ee972ec520_0 (v0x55ee972eb670_0, v0x55ee972eb750_0) S_0x55ee972eb3b0;
+L_0x55ee972ecc60 .ufunc/vec4 TD_alu_tb.tb.div1, 4, v0x55ee972ec370_0, v0x55ee972ec520_0 (v0x55ee972eb210_0, v0x55ee972eb2f0_0) S_0x55ee972eaf30;
+S_0x55ee97296490 .scope function.vec4.s4, "add1" "add1" 3 3, 3 3 0, S_0x55ee972d4b60;
+ .timescale 0 0;
+; Variable add1 is vec4 return value of scope S_0x55ee97296490
+v0x55ee972ead90_0 .var "x", 2 0;
+v0x55ee972eae70_0 .var "y", 2 0;
+TD_alu_tb.tb.add1 ;
+    %load/vec4 v0x55ee972ead90_0;
+    %pad/u 4;
+    %load/vec4 v0x55ee972eae70_0;
+    %pad/u 4;
+    %add;
+    %ret/vec4 0, 0, 4;  Assign to add1 (store_vec4_to_lval)
+    %end;
+S_0x55ee972eaf30 .scope function.vec4.s4, "div1" "div1" 3 25, 3 25 0, S_0x55ee972d4b60;
+ .timescale 0 0;
+; Variable div1 is vec4 return value of scope S_0x55ee972eaf30
+v0x55ee972eb210_0 .var "x", 2 0;
+v0x55ee972eb2f0_0 .var "y", 2 0;
+TD_alu_tb.tb.div1 ;
+    %load/vec4 v0x55ee972eb210_0;
+    %pad/u 4;
+    %load/vec4 v0x55ee972eb2f0_0;
+    %pad/u 4;
+    %div;
+    %ret/vec4 0, 0, 4;  Assign to div1 (store_vec4_to_lval)
+    %end;
+S_0x55ee972eb3b0 .scope function.vec4.s4, "multi1" "multi1" 3 18, 3 18 0, S_0x55ee972d4b60;
+ .timescale 0 0;
+; Variable multi1 is vec4 return value of scope S_0x55ee972eb3b0
+v0x55ee972eb670_0 .var "x", 2 0;
+v0x55ee972eb750_0 .var "y", 2 0;
+TD_alu_tb.tb.multi1 ;
+    %load/vec4 v0x55ee972eb670_0;
+    %pad/u 4;
+    %load/vec4 v0x55ee972eb750_0;
+    %pad/u 4;
+    %mul;
+    %ret/vec4 0, 0, 4;  Assign to multi1 (store_vec4_to_lval)
+    %end;
+S_0x55ee972eb840 .scope function.vec4.s4, "sub1" "sub1" 3 11, 3 11 0, S_0x55ee972d4b60;
+ .timescale 0 0;
+; Variable sub1 is vec4 return value of scope S_0x55ee972eb840
+v0x55ee972ebb20_0 .var "x", 2 0;
+v0x55ee972ebc00_0 .var "y", 2 0;
+TD_alu_tb.tb.sub1 ;
+    %load/vec4 v0x55ee972ebb20_0;
+    %pad/u 4;
+    %load/vec4 v0x55ee972ebc00_0;
+    %pad/u 4;
+    %sub;
+    %ret/vec4 0, 0, 4;  Assign to sub1 (store_vec4_to_lval)
+    %end;
+    .scope S_0x55ee972d49d0;
+T_4 ;
+    %pushi/vec4 3, 0, 3;
+    %store/vec4 v0x55ee972ec370_0, 0, 3;
+    %pushi/vec4 1, 0, 3;
+    %store/vec4 v0x55ee972ec520_0, 0, 3;
+    %vpi_call 2 15 "$monitor", "a=%0b,b=%0b,add=%0b,sub=%0b,multi=%0b,div=%0b", v0x55ee972ec370_0, v0x55ee972ec520_0, v0x55ee972ec450_0, v0x55ee972ec7e0_0, v0x55ee972ec6f0_0, v0x55ee972ec620_0 {0 0 0};
+    %delay 30, 0;
+    %vpi_call 2 18 "$finish" {0 0 0};
+    %end;
+    .thread T_4;
+# The file index is used to find the file name in the following table.
+:file_names 4;
+    "N/A";
+    "<interactive>";
+    "alufunc_tb";
+    "alufunc";
