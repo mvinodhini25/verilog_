@@ -1,10 +1,19 @@
-module comparator(input a,b,output gt,eq,ls);
-wire x,y;
+module comparator(input [3:0]a,b,output reg gt,eq,ls);
+always@(*)begin
 if(a<b)begin
-ls=a;
-else if(a==b)
+gt=0;
+eq=0;
+ls=1;
+end
+else if(a==b)begin
+gt=0;
 eq=1;
-else
-gt=b;
+ls=0;
+end
+else begin
+gt=1;
+eq=0;
+ls=0;
+end
 end
 endmodule
