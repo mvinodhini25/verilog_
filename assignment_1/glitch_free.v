@@ -8,7 +8,7 @@ else if(s==2'b10)begin
 y=clk250;
 end
 else begin 
-y=1'b0
+y=1'b0;
 end
 
 end
