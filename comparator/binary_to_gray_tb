@@ -1,2 +1,18 @@
-module b_to_b_tb;
-wire 
+module b_to_g_tb;
+wire g3,g2,g1,g0;
+reg b3,b2,b1,b0;
+
+b_to_g b(.g3(g3),.g2(g2),.g1(g1),.g0(g0),.b3(b3),.b2(b2),.b1(b1),.b0(b0));
+
+initial begin 
+b3=0;b2=1;b1=1;b0=0;#10;
+b3=0;b2=1;b1=0;b0=1;#10; 
+b3=0;b2=1;b1=0;b0=0;#10;
+b3=1;b2=1;b1=1;b0=0;#10;
+$finish;
+end
+initial begin 
+$monitor("time=%0t,b3=%0b,b2=%0b,b1=%0b,b0=%0b,g3=%0b,g2=%0b,g1=%0b,g0=%0b",$time,b3,b2,b1,b0,g3,g2,g1,g0);
+end
+
+endmodule
