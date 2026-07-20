@@ -17,7 +17,7 @@ $finish;
 end
 
 initial begin 
-$monitor("q=%0b",q);
+$monitor("d=%0b,clk=%0b,rst=%0b,q=%0b",d,clk,rst,q);
 end
 
 endmodule
