@@ -1,4 +1,4 @@
-module temp(input a,output reg [47:0]temp);
+module temp(input [6:0]a,output reg [47:0]temp);
 always@(*) begin 
 if(a>6'd50) begin 
 temp="hot";
