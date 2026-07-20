@@ -1,0 +1,66 @@
+#! /usr/bin/vvp
+:ivl_version "12.0 (stable)";
+:ivl_delay_selection "TYPICAL";
+:vpi_time_precision + 0;
+:vpi_module "/usr/lib/x86_64-linux-gnu/ivl/system.vpi";
+:vpi_module "/usr/lib/x86_64-linux-gnu/ivl/vhdl_sys.vpi";
+:vpi_module "/usr/lib/x86_64-linux-gnu/ivl/vhdl_textio.vpi";
+:vpi_module "/usr/lib/x86_64-linux-gnu/ivl/v2005_math.vpi";
+:vpi_module "/usr/lib/x86_64-linux-gnu/ivl/va_math.vpi";
+S_0x59f8595cdf80 .scope module, "p_n_tb" "p_n_tb" 2 1;
+ .timescale 0 0;
+v0x59f8595dfa90_0 .var "a", 3 0;
+v0x59f8595dfb50_0 .net "det", 63 0, v0x59f8595df950_0;  1 drivers
+S_0x59f8595ce110 .scope module, "detec" "p_n" 2 5, 3 1 0, S_0x59f8595cdf80;
+ .timescale 0 0;
+    .port_info 0 /INPUT 4 "a";
+    .port_info 1 /OUTPUT 64 "det";
+v0x59f8595ce310_0 .net "a", 3 0, v0x59f8595dfa90_0;  1 drivers
+v0x59f8595df950_0 .var "det", 63 0;
+E_0x59f859594a70 .event anyedge, v0x59f8595ce310_0;
+    .scope S_0x59f8595ce110;
+T_0 ;
+    %wait E_0x59f859594a70;
+    %load/vec4 v0x59f8595ce310_0;
+    %parti/s 1, 3, 3;
+    %pad/u 32;
+    %cmpi/e 0, 0, 32;
+    %jmp/0xz  T_0.0, 4;
+    %pushi/vec4 1886352233, 0, 32; draw_string_vec4
+    %pushi/vec4 1953068645, 0, 32; draw_string_vec4
+    %concat/vec4; draw_string_vec4
+    %store/vec4 v0x59f8595df950_0, 0, 64;
+    %jmp T_0.1;
+T_0.0 ;
+    %pushi/vec4 1852139361, 0, 32; draw_string_vec4
+    %pushi/vec4 1953068645, 0, 32; draw_string_vec4
+    %concat/vec4; draw_string_vec4
+    %store/vec4 v0x59f8595df950_0, 0, 64;
+T_0.1 ;
+    %jmp T_0;
+    .thread T_0, $push;
+    .scope S_0x59f8595cdf80;
+T_1 ;
+    %pushi/vec4 10, 0, 4;
+    %store/vec4 v0x59f8595dfa90_0, 0, 4;
+    %delay 10, 0;
+    %pushi/vec4 3, 0, 4;
+    %store/vec4 v0x59f8595dfa90_0, 0, 4;
+    %delay 10, 0;
+    %pushi/vec4 8, 0, 4;
+    %store/vec4 v0x59f8595dfa90_0, 0, 4;
+    %delay 10, 0;
+    %vpi_call 2 11 "$finish" {0 0 0};
+    %end;
+    .thread T_1;
+    .scope S_0x59f8595cdf80;
+T_2 ;
+    %vpi_call 2 15 "$monitor", "time=%0t,a=%0b,det=%s", $time, v0x59f8595dfa90_0, v0x59f8595dfb50_0 {0 0 0};
+    %end;
+    .thread T_2;
+# The file index is used to find the file name in the following table.
+:file_names 4;
+    "N/A";
+    "<interactive>";
+    "posi_or_neg_tb.v";
+    "posi_or_neg.v";
