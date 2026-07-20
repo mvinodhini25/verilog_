@@ -9,12 +9,12 @@ mux m1(.y(y),.clk62_5(clk62_5),.clk250(clk250),.s(s));
  
 initial begin
        	clk62_5 = 0;
-forever #8 clk62_5 = ~clk62_5;
+forever #12 clk62_5 = ~clk62_5;
 end
 
 initial begin
 	clk250 = 0;
-forever #2 clk250 = ~clk250;
+forever #6clk250 = ~clk250;
 end
 
 initial begin
