@@ -7,35 +7,35 @@
 :vpi_module "/usr/lib/x86_64-linux-gnu/ivl/vhdl_textio.vpi";
 :vpi_module "/usr/lib/x86_64-linux-gnu/ivl/v2005_math.vpi";
 :vpi_module "/usr/lib/x86_64-linux-gnu/ivl/va_math.vpi";
-S_0x5d0678836490 .scope module, "demo_tb" "demo_tb" 2 1;
+S_0x60bd0ad81260 .scope module, "demo" "demo" 2 1;
  .timescale 0 0;
-v0x5d067887f6c0_0 .var "a", 4 0;
-v0x5d067887f780_0 .var "b", 4 0;
-S_0x5d0678836620 .scope module, "d" "demo" 2 4, 3 1 0, S_0x5d0678836490;
+    .port_info 0 /OUTPUT 1 "a";
+    .port_info 1 /OUTPUT 1 "b";
+o0x7d088e6e6018 .functor BUFZ 1, C4<z>; HiZ drive
+v0x60bd0ad815c0_0 .net "a", 0 0, o0x7d088e6e6018;  0 drivers
+o0x7d088e6e6048 .functor BUFZ 1, C4<z>; HiZ drive
+v0x60bd0ad8fe10_0 .net "b", 0 0, o0x7d088e6e6048;  0 drivers
+S_0x60bd0ad81410 .scope module, "demo_tb" "demo_tb" 3 1;
  .timescale 0 0;
-    .port_info 0 /INPUT 5 "a";
-    .port_info 1 /INPUT 5 "b";
-v0x5d0678836800_0 .net "a", 4 0, v0x5d067887f6c0_0;  1 drivers
-v0x5d067887f580_0 .net "b", 4 0, v0x5d067887f780_0;  1 drivers
-    .scope S_0x5d0678836490;
+v0x60bd0ad8ff30_0 .var "a", 4 0;
+v0x60bd0ad90010_0 .var "b", 4 0;
+    .scope S_0x60bd0ad81410;
 T_0 ;
     %pushi/vec4 12, 0, 5;
-    %store/vec4 v0x5d067887f6c0_0, 0, 5;
-    %delay 10, 0;
+    %store/vec4 v0x60bd0ad8ff30_0, 0, 5;
     %pushi/vec4 21, 0, 5;
-    %store/vec4 v0x5d067887f780_0, 0, 5;
-    %delay 10, 0;
-    %vpi_call 2 9 "$finish" {0 0 0};
+    %store/vec4 v0x60bd0ad90010_0, 0, 5;
+    %vpi_call 3 7 "$finish" {0 0 0};
     %end;
     .thread T_0;
-    .scope S_0x5d0678836490;
+    .scope S_0x60bd0ad81410;
 T_1 ;
-    %vpi_call 2 13 "$monitor", "time=%0t,a=%d,b=%d", $time, v0x5d067887f6c0_0, v0x5d067887f780_0 {0 0 0};
+    %vpi_call 3 10 "$monitor", "a=%d,b=%d", v0x60bd0ad8ff30_0, v0x60bd0ad90010_0 {0 0 0};
     %end;
     .thread T_1;
 # The file index is used to find the file name in the following table.
 :file_names 4;
     "N/A";
     "<interactive>";
-    "demo_w_delay_tb.v";
-    "demo_w_delay.v";
+    "demo.v";
+    "demo_tb.v";
