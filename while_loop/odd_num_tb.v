@@ -1,10 +1,13 @@
 module odd_tb;
+wire odd;
 integer i;
+odd tb(.odd(odd));
 initial begin 
 i=1;
-while(1<=20) begin 
+while(i<=20) begin 
+$display("odd=%0d",i);
 i=i+2;
-$display("odd",i);
+#10;
 end
 $finish;
 end 
