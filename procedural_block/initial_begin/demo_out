@@ -1,0 +1,41 @@
+#! /usr/bin/vvp
+:ivl_version "12.0 (stable)";
+:ivl_delay_selection "TYPICAL";
+:vpi_time_precision + 0;
+:vpi_module "/usr/lib/x86_64-linux-gnu/ivl/system.vpi";
+:vpi_module "/usr/lib/x86_64-linux-gnu/ivl/vhdl_sys.vpi";
+:vpi_module "/usr/lib/x86_64-linux-gnu/ivl/vhdl_textio.vpi";
+:vpi_module "/usr/lib/x86_64-linux-gnu/ivl/v2005_math.vpi";
+:vpi_module "/usr/lib/x86_64-linux-gnu/ivl/va_math.vpi";
+S_0x558c38028260 .scope module, "demo" "demo" 2 1;
+ .timescale 0 0;
+    .port_info 0 /OUTPUT 1 "a";
+    .port_info 1 /OUTPUT 1 "b";
+o0x73a4ed6b7018 .functor BUFZ 1, C4<z>; HiZ drive
+v0x558c380285c0_0 .net "a", 0 0, o0x73a4ed6b7018;  0 drivers
+o0x73a4ed6b7048 .functor BUFZ 1, C4<z>; HiZ drive
+v0x558c38036e10_0 .net "b", 0 0, o0x73a4ed6b7048;  0 drivers
+S_0x558c38028410 .scope module, "demo_tb" "demo_tb" 3 1;
+ .timescale 0 0;
+v0x558c38036f30_0 .var "a", 4 0;
+v0x558c38037010_0 .var "b", 4 0;
+    .scope S_0x558c38028410;
+T_0 ;
+    %pushi/vec4 12, 0, 5;
+    %store/vec4 v0x558c38036f30_0, 0, 5;
+    %pushi/vec4 21, 0, 5;
+    %store/vec4 v0x558c38037010_0, 0, 5;
+    %vpi_call 3 7 "$finish" {0 0 0};
+    %end;
+    .thread T_0;
+    .scope S_0x558c38028410;
+T_1 ;
+    %vpi_call 3 10 "$monitor", "a=%d,b=%d", v0x558c38036f30_0, v0x558c38037010_0 {0 0 0};
+    %end;
+    .thread T_1;
+# The file index is used to find the file name in the following table.
+:file_names 4;
+    "N/A";
+    "<interactive>";
+    "demo.v";
+    "demo_tb.v";
