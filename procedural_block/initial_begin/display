@@ -1,0 +1,3 @@
+module display(a);
+input [103:0]a;
+endmodule

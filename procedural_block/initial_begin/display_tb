@@ -1,0 +1,11 @@
+module display_tb;
+reg [103:0]a;
+
+display d(.a(a));
+
+initial begin 
+a="Hello Verilog";
+$display("%s",a);
+end
+
+endmodule
