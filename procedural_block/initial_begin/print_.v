@@ -5,8 +5,7 @@ integer i;
 initial begin
 i=1; 
 while (i<=10) begin
-num = i;
-$display("%d",num);
+$display("%0d",i);
 i = i+1;
 end
 end
