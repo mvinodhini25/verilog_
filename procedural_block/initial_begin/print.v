@@ -1,6 +1,6 @@
 module print(output reg num);
 integer i;
-always@(*) begin
+initial begin
 i=1;
 while (i<=10) begin 
 num =i;
