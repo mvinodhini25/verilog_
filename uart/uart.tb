@@ -34,17 +34,20 @@ end
 assign uart_rx = uart_tx;
 
 initial begin
-	rst = 0; 
+	rst = 1; 
 	tx_data = 8'h64; 
 	tx_start = 0; 
 	parity_en = 0; 
 	parity_type = 1; 
 	#100;
 	
-	rst = 1;
-	#50;
 	rst = 0;
+	#50;
+	tx_start = 1; 
 	#50; 
+	tx_start = 0; 
+	#50;
+	wait(tx_busy == 1);
 	wait(tx_busy == 0);
 
 	#200000;
