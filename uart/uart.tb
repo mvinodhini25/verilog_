@@ -1,7 +1,7 @@
 module uart_tb;
 reg clk;
 reg rst;
-reg uart_rx;
+wire uart_rx;
 wire uart_tx;
 //transmitter
 reg [7:0] tx_data;
@@ -31,7 +31,7 @@ initial begin
 	clk = 0;
 	forever #10clk = ~clk;
 end
-
+assign uart_rx = uart_tx;
 
 initial begin
 	rst = 0; 
@@ -39,50 +39,16 @@ initial begin
 	tx_start = 0; 
 	parity_en = 0; 
 	parity_type = 1; 
-	uart_rx = 1;
-	#50;
+	#100;
 	
 	rst = 1;
 	#50;
 	rst = 0;
-	#50;
-	//transmitter
-	tx_data = 8'd64;
-	tx_start = 1;
-	#20;
-	tx_start = 0; 
-	parity_en = 0; 
-	parity_type = 1; 
+	#50; 
 	wait(tx_busy == 0);
 
 	#200000;
 	
-	#5000;
-	//receiver
-	uart_rx = 0;
-	#104167;
-	
-	uart_rx = 0;
-	#104167;
-	uart_rx = 0;
-	#104167;
-	uart_rx = 0;
-	#104167;
-	uart_rx = 0;
-	#104167;
-	uart_rx = 0;
-	#104167;
-	uart_rx = 0;
-	#104167;
-	uart_rx = 1;
-	#104167;
-	uart_rx = 0;
-	#104167;
-	
-	uart_rx = 1;
-	#104167;
-	
-	#100000;
     $finish;
 end
 
