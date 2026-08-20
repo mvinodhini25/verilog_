@@ -50,7 +50,7 @@ initial begin
 	wait(tx_busy == 1);
 	wait(tx_busy == 0);
 
-	#200000;
+	#2000000;
 	
     $finish;
 end
