@@ -67,9 +67,6 @@ end
 
 always@(*) begin
 	next = state;
-	rx_data = 8'd0;
-	rx_valid = 0;
-	rx_error = 0;
 	case(state)
 		rx_idle : begin
 			if(rx == 0)
@@ -104,16 +101,6 @@ always@(*) begin
 		
 		rx_stop: begin
     			if (baudcount == t_bit-1) begin
-       				 if (rx == 1) begin
-            				rx_data  = shift_reg;
-            				rx_valid = 1;
-           					rx_error = 0;
-        			end
-        			else begin
-            				rx_data = 8'd0;
-            				rx_valid = 0;
-            				rx_error = 1;
-        			end
         			next = rx_idle;
         		end
         		else begin
@@ -121,11 +108,29 @@ always@(*) begin
     		    end
 		end
 		default : begin 
-			rx_data = 8'd0;
-			rx_valid = 0;
-			rx_error = 0;
+			next = rx_idle;
 		end
 	endcase
 end
+always @(posedge clk or posedge rst) begin
+    if (rst) begin
+        rx_data  <= 8'd0;
+        rx_valid <= 1'b0;
+        rx_error <= 1'b0;
+    end
+    else begin
+        rx_valid <= 1'b0;
+        rx_error <= 1'b0;
 
+        if (state == rx_stop && baudcount == t_bit-1) begin
+            if (rx == 1'b1) begin
+                rx_data  <= shift_reg;
+                rx_valid <= 1'b1;
+            end
+            else begin
+                rx_error <= 1'b1;
+            end
+        end
+    end
+end
 endmodule 
