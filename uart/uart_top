@@ -28,7 +28,7 @@ receiver #(.clock(clock),
 	   .baudrate(baudrate))
 uart_rx1(.clk(clk),
 	 .rst(rst),
-	 .rx(uart_rx),,
+	 .rx(uart_rx),
 	 .rx_data(rx_data),
 	 .rx_valid(rx_valid),
 	 .rx_error(rx_error));
