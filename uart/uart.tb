@@ -6,8 +6,6 @@ wire uart_tx;
 //transmitter
 reg [7:0] tx_data;
 reg tx_start;
-reg parity_en;
-reg parity_type;
 wire tx_busy;
 //receiver
 wire [7:0]rx_data;
@@ -20,8 +18,6 @@ uart u1(.clk(clk),
 	.uart_rx(uart_rx),
 	.tx_data(tx_data),
 	.tx_start(tx_start),
-	.parity_en(parity_en),
-	.parity_type(parity_type),
 	.tx_busy(tx_busy),
 	.rx_data(rx_data),
 	.rx_valid(rx_valid),
@@ -37,8 +33,6 @@ initial begin
 	rst = 1; 
 	tx_data = 8'h64; 
 	tx_start = 0; 
-	parity_en = 0; 
-	parity_type = 1; 
 	#100;
 	
 	rst = 0;
@@ -57,7 +51,7 @@ end
 
 
 initial begin 
-	$monitor("time=%0t, parity_en=%0d, parity_type=%0d, tx_start=%0d, tx_data=%0d, tx_busy=%0d, uart_tx=%0d, uart_rx=%0d, rx_data=%0d, rx_valid=%0d, rx_error=%0d", $time, parity_en, parity_type, tx_start, tx_data, tx_busy, uart_tx, uart_rx, rx_data, rx_valid, rx_error);
+	$monitor("time=%0t, tx_start=%0d, tx_data=%0d, tx_busy=%0d, uart_tx=%0d, uart_rx=%0d, rx_data=%0d, rx_valid=%0d, rx_error=%0d", $time, tx_start, tx_data, tx_busy, uart_tx, uart_rx, rx_data, rx_valid, rx_error);
 end
 
 endmodule
