@@ -15,7 +15,7 @@ output rx_valid,
 output rx_error);
 
 wire tx_internal;
-wire rx_loop;
+
 
 transmiter #(.clock(clock),
 	      .baudrate(baudrate))
@@ -32,7 +32,7 @@ receiver #(.clock(clock),
 	   .baudrate(baudrate))
 uart_rx1(.clk(clk),
 	 .rst(rst),
-	 .rx(rx_loop),
+	 .rx(uart_rx),
 	 .parity_en(parity_en),
 	 .parity_type(parity_type),
 	 .rx_data(rx_data),
@@ -40,5 +40,5 @@ uart_rx1(.clk(clk),
 	 .rx_error(rx_error));
 
 assign uart_tx = tx_internal;
-assign rx_loop = tx_internal;
+
 endmodule
