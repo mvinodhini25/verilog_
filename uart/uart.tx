@@ -144,11 +144,9 @@ tx_stop: begin
 
     if (baudcount == t_bit-1) begin
         next = tx_idle;
-        tx_busy = 0;
     end
     else begin
         next = tx_stop;
-        tx_busy = 1;
     end
 end
 	default : begin
