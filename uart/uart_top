@@ -1,4 +1,4 @@
-module uart #(parameter integer clock = 50000000,baudrate = 9600)
+module uart #(parameter integer clock = 50000000,baudrate = 115200)
 (input clk,
 input rst,
 input uart_rx,
