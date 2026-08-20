@@ -56,7 +56,7 @@ always @(posedge clk or posedge rst) begin
 always@(posedge clk or posedge rst) begin
 	if(rst) 
 		parity <= 0;
-	else if(state == tx__start && state == tx_idle) begin
+	else if(state == tx_idle && tx_start) begin
 		if(parity_en) begin
 			if(parity_type)
 				parity <= ~^tx_data;
@@ -72,7 +72,7 @@ always@(posedge clk or posedge rst ) begin
 	if(rst)
 		shift_reg <= 0;
 	else begin
-		if (state == tx__start && state == tx_idle)
+		if (state == tx_idle && tx_start)
     			shift_reg <= tx_data;
 		else if (baudcount == t_bit-1 && state == tx__data)
     			shift_reg <= {1'b0,shift_reg[7:1]};
