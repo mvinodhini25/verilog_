@@ -9,8 +9,8 @@ output reg rx_valid,
 output reg rx_error
 );
 
-localparam t_bit = clock/baudrate;
-localparam half_bit = t_bit/2;
+localparam integer t_bit = clock/baudrate;
+localparam integer half_bit = t_bit/2;
 
 
 reg [2:0] state,next;
