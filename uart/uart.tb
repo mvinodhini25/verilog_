@@ -35,7 +35,7 @@ assign uart_rx = uart_tx;
 
 initial begin
 	rst = 0; 
-	tx_data = 8'd64; 
+	tx_data = 8'h64; 
 	tx_start = 0; 
 	parity_en = 0; 
 	parity_type = 1; 
