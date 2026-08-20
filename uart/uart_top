@@ -39,4 +39,5 @@ uart_rx1(.clk(clk),
 	 .rx_error(rx_error));
 
 assign uart_tx = tx_internal;
+assign uart_rx = tx_internal;
 endmodule
