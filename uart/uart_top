@@ -6,6 +6,8 @@ output uart_tx,
 //transmitter
 input [7:0] tx_data,
 input tx_start,
+input parity_en,
+input parity_type,
 output tx_busy,
 //receiver
 output [7:0]rx_data,
@@ -21,6 +23,8 @@ uart_tx1(.clk(clk),
 	 .rst(rst),
 	 .tx_data(tx_data),
 	 .tx_start(tx_start),
+	 .parity_en(parity_en),
+     .parity_type(parity_type),
 	 .tx(tx_internal),
 	 .tx_busy(tx_busy));
 	
@@ -29,6 +33,8 @@ receiver #(.clock(clock),
 uart_rx1(.clk(clk),
 	 .rst(rst),
 	 .rx(uart_rx),
+     .parity_en(parity_en),
+     .parity_type(parity_type),
 	 .rx_data(rx_data),
 	 .rx_valid(rx_valid),
 	 .rx_error(rx_error));
