@@ -1,0 +1,4 @@
+module demux2to1(input x,s,output i0,i1);
+assign i0 = ~s&x;
+assign i1 = s&x;
+endmodule 

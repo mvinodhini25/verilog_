@@ -1,0 +1,18 @@
+module demux2to1_tb;
+wire i0,i1;
+reg x,s;
+
+demux2to1 demux(.x(x),.s(s),.i0(i0),.i1(i1));
+
+initial begin 
+x=0;s=0;#10;
+x=0;s=1;#10;
+x=1;s=0;#10;
+x=1;s=1;#10;
+$finish;
+end
+
+initial begin 
+$monitor("Time=%0t,x=%0b,s=%0b,i1=%0b,i0=%0b",$time,x,s,i0,i1);
+end
+endmodule
