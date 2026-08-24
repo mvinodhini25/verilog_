@@ -130,7 +130,7 @@ end
 tx_parity: begin
         tx = parity;
         tx_busy = 1;
-
+        
         if(baudcount == t_bit-1)
                 next = tx_stop;
         else
@@ -158,5 +158,3 @@ end
 
 endmodule
 		
-
-
