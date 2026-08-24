@@ -1,4 +1,4 @@
-module receiver#(parameter baudrate = 9600 , clock = 50000)
+module receiver#(parameter integer clock = 30000000, baudrate = 115200)
 (input clk,
 input rst,
 input rx,
@@ -9,15 +9,16 @@ output reg rx_valid,
 output reg rx_error
 );
 
-localparam t_bit = clock/baudrate;
-localparam half_bit = t_bit/2;
+localparam integer t_bit = clock/baudrate;
+localparam integer half_bit = t_bit/2;
 
 
 reg [2:0] state,next;
 reg [12:0] baudcount;
 reg [2:0] bitcount;
-reg parity;
 reg [7:0] shift_reg;
+reg parity;
+reg parity_error;
 
 parameter rx_idle = 3'd0,rx_start_check = 3'd5,rx__data = 3'd2,rx_parity = 3'd3,rx_stop = 3'd4;
 
@@ -60,18 +61,18 @@ always@(posedge clk or posedge rst) begin
 end
 
 always@(posedge clk or posedge rst ) begin
-	if(rst)
-		parity <= 0;
-	else if(state == rx__data && baudcount == t_bit-1 && bitcount == 3'd7)begin
-		if(parity_en) begin
-			if(parity_type)
-				parity <= ~^{rx,shift_reg};
-			else 
-				parity <= ^{rx,shift_reg};
-		end
-		else
-			parity <= 0;
-	end
+        if(rst)
+                parity <= 0;
+        else if(state == rx__data && baudcount == t_bit-1 && bitcount == 3'd7)begin
+                if(parity_en) begin
+                        if(parity_type)
+                                parity <= ~^{rx,shift_reg};
+                        else
+                                parity <= ^{rx,shift_reg};
+                end
+                else
+                        parity <= 0;
+        end
 end
 
 always@(posedge clk or posedge rst) begin
@@ -85,9 +86,7 @@ end
 
 always@(*) begin
 	next = state;
-	rx_data = 8'd0;
-	rx_valid = 0;
-	rx_error = 0;
+	parity_error = 0;
 	case(state)
 		rx_idle : begin
 			if(rx == 0)
@@ -108,12 +107,12 @@ always@(*) begin
 		end
 		rx__data : begin
 			if(baudcount == t_bit-1) begin
-			  	if (bitcount == 3'd7) begin
-					if(parity_en)
-						next = rx_parity;
-					else 
-						next = rx_stop;
-				end
+						if (bitcount == 3'd7) begin
+                                if(parity_en)
+                                     next = rx_parity;
+                                else
+									next = rx_stop;
+						end
 				else begin
 					next = rx__data;
 				end
@@ -122,41 +121,54 @@ always@(*) begin
 				next = rx__data;
 			end
 		end
-		
+
 		rx_parity : begin
-			if(baudcount == t_bit-1) begin
-			    if(rx != parity) 
-				rx_error = 1;
-				next = rx_stop;
-			end
-			else 
-				next = rx_parity;
-		end
+                        if(baudcount == t_bit-1) begin
+                            if(rx != parity)
+                                parity_error = 1;
+                             else
+                                parity_error = 0;
+                               
+                                
+                                next = rx_stop;
+                        end
+                        else
+                                next = rx_parity;
+                end
 		
 		rx_stop: begin
     			if (baudcount == t_bit-1) begin
-       				 if (rx == 1) begin
-            				rx_data  = shift_reg;
-            				rx_valid = 1;
-           				rx_error = 0;
-        			end
-        			else begin
-            				rx_data = 8'd0;
-            				rx_valid = 0;
-            				rx_error = 1;
-        			end
+    			 if (rx == 1'b1) 
         			next = rx_idle;
-        		end
-        		else begin
+        		else 
         			next = rx_stop;
     		    end
+    		    else
+    		      next = rx_stop;
 		end
 		default : begin 
-			rx_data = 8'd0;
-			rx_valid = 0;
-			rx_error = 0;
+			next = rx_idle;
 		end
 	endcase
 end
-
+always @(posedge clk or posedge rst) begin
+    if (rst) begin
+        rx_data  <= 8'd0;
+        rx_valid <= 1'b0;
+        rx_error <= 1'b0;
+    end
+    else begin
+        if (state == rx_stop && baudcount == t_bit-1) begin
+            if (rx == 1'b1) begin
+                rx_data  <= shift_reg;
+                rx_valid <= 1'b1;
+                rx_error <= parity_error;
+            end
+            else begin
+                rx_error <= 1'b1;
+                rx_valid <= 1'b0;
+            end
+        end
+    end
+end
 endmodule 
