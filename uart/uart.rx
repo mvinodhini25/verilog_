@@ -18,6 +18,7 @@ reg [12:0] baudcount;
 reg [2:0] bitcount;
 reg [7:0] shift_reg;
 reg parity;
+reg parity_error;
 
 parameter rx_idle = 3'd0,rx_start_check = 3'd5,rx__data = 3'd2,rx_parity = 3'd3,rx_stop = 3'd4;
 
@@ -85,6 +86,7 @@ end
 
 always@(*) begin
 	next = state;
+	parity_error = 0;
 	case(state)
 		rx_idle : begin
 			if(rx == 0)
@@ -123,6 +125,11 @@ always@(*) begin
 		rx_parity : begin
                         if(baudcount == t_bit-1) begin
                             if(rx != parity)
+                                parity_error = 1;
+                             else
+                                parity_error = 0;
+                               
+                                
                                 next = rx_stop;
                         end
                         else
@@ -131,11 +138,13 @@ always@(*) begin
 		
 		rx_stop: begin
     			if (baudcount == t_bit-1) begin
+    			 if (rx == 1'b1) 
         			next = rx_idle;
-        		end
-        		else begin
+        		else 
         			next = rx_stop;
     		    end
+    		    else
+    		      next = rx_stop;
 		end
 		default : begin 
 			next = rx_idle;
@@ -149,17 +158,15 @@ always @(posedge clk or posedge rst) begin
         rx_error <= 1'b0;
     end
     else begin
-        rx_valid <= 1'b0;
-        rx_error <= 1'b0;
-
         if (state == rx_stop && baudcount == t_bit-1) begin
             if (rx == 1'b1) begin
                 rx_data  <= shift_reg;
                 rx_valid <= 1'b1;
-				rx_error <= parity;
+                rx_error <= parity_error;
             end
             else begin
                 rx_error <= 1'b1;
+                rx_valid <= 1'b0;
             end
         end
     end
