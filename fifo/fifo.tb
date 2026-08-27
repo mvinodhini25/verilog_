@@ -1,0 +1,35 @@
+module tb;
+wire [7:0]data_out;
+wire full,empty;
+reg [7:0]data_in;
+reg wr_en,re_en,clk,rst;
+
+fifo ff(.wr_en(wr_en),.re_en(re_en),.clk(clk),.rst(rst),.data_in(data_in),.data_out(data_out),.full(full),.empty(empty));
+
+initial begin 
+clk = 0;
+forever #10clk =~clk;
+end
+
+initial begin
+rst=1;wr_en=0;re_en=0;data_in=8'd4;#20;
+rst=0;wr_en=0;re_en=0;data_in=8'd4;#20;
+rst=0;wr_en=1;re_en=0;data_in=8'd4;#20;
+rst=0;wr_en=0;re_en=1;data_in=8'd4;#20;
+rst=0;wr_en=1;re_en=1;data_in=8'd4;#20;
+rst=0;wr_en=1;re_en=0;data_in=8'd4;#20;
+rst=0;wr_en=1;re_en=0;data_in=8'd4;#20;
+rst=0;wr_en=1;re_en=0;data_in=8'd4;#20;
+
+$finish;
+end
+
+initial begin 
+
+    $monitor("time=%0t clk=%0d rst=%0d wr=%0d rd=%0d din=%0d dout=%0d COUNT=%0d FULL=%0d EMPTY=%0d",
+             $time, clk, rst, wr_en, re_en,
+             data_in, data_out, ff.count, full, empty);
+
+end
+
+endmodule
