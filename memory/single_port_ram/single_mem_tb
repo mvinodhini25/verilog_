@@ -1,0 +1,39 @@
+module memory_tb;
+
+wire [7:0] data_out;
+reg [3:0] addr;
+reg [7:0] data_in;
+reg wr, clk;
+
+memory m1(
+    .clk(clk),
+    .wr(wr),
+    .addr(addr),
+    .data_in(data_in),
+    .data_out(data_out)
+);
+
+initial begin
+    clk = 0;
+    forever #5 clk = ~clk;
+end
+
+initial begin
+    addr = 4'd3;
+    data_in = 8'd7;
+
+    wr = 1;
+    #10;
+
+    wr = 0;
+    #10;
+
+    $finish;
+end
+
+initial begin
+    $monitor("time=%0t, wr=%0b, addr=%0d, data_in=%0d, data_out=%0d",
+             $time, wr, addr, data_in, data_out);
+end
+
+endmodule

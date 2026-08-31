@@ -1,0 +1,139 @@
+/* module tb;
+
+wire out;
+reg [7:0] d;
+reg clk, rst, load;
+
+piso p1(
+    .d(d),
+    .clk(clk),
+    .rst(rst),
+    .load(load),
+    .out(out)
+);
+
+initial begin
+    clk = 0;
+    forever #10 clk = ~clk;
+end
+
+initial begin
+    rst  = 1;
+    load = 0;
+    d    = 8'b0;
+
+    #20;
+
+    rst  = 0;
+    d   = 8'b10000101;
+    load = 1;
+    #20;
+
+    load = 0;
+    #160;
+
+    $finish;
+end
+
+initial begin
+    $monitor("time=%0t, clk=%0b, rst=%0b, load=%0b, d=%0b, out=%0b",
+             $time, clk, rst, load, d, out);
+end
+
+endmodule 
+
+//PIPO
+
+module tb;
+wire [3:0]q;
+reg clk,rst;
+reg [3:0]d;
+
+pipo p1(.d(d),.clk(clk),.rst(rst),.q(q));
+
+initial begin
+clk = 0;
+forever #10 clk = ~clk;
+end
+
+initial begin
+rst = 1;
+#20;
+
+rst = 0;
+d=4'd13;
+#320;
+
+$finish;
+end
+
+initial begin
+$monitor("time=%0t,clk=%0b,rst=%0b,d=%0b,q=%0b",$time,clk,rst,d,q);
+end
+
+endmodule 
+
+//SIPO
+
+module tb;
+wire out;
+reg clk,rst,d;
+
+sipo s1(.clk(clk),.rst(rst),.d(d),.out(out));
+
+initial begin
+clk = 0;
+forever #10 clk = ~clk;
+end
+
+initial begin
+rst =1;
+#10;
+
+rst=0;
+d=1;
+#20;
+d=1;
+#20;
+d=0;
+#20;
+$finish;
+end
+
+initial begin
+$monitor("time=%0t,clk=%0b,rst=%0b,d=%0b,out=%0b",$time,clk,rst,d,out);
+end
+
+endmodule */
+
+//SISO
+module tb;
+wire out;
+reg clk,rst,d;
+
+siso s1(.clk(clk),.rst(rst),.d(d),.out(out));
+
+initial begin
+clk = 0;
+forever #10 clk = ~clk;
+end
+
+initial begin
+rst =1;
+#10;
+
+rst=0;
+d=1;
+#20;
+d=1;
+#20;
+d=0;
+#80;
+$finish;
+end
+
+initial begin
+$monitor("time=%0t,clk=%0b,rst=%0b,d=%0b,out=%0b",$time,clk,rst,d,out);
+end
+
+endmodule

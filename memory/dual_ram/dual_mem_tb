@@ -25,5 +25,3 @@ $monitor("time=%0t,wr=%0b,re=%0b,addr=%0d,data_in=%0d,data_out=%0d",$time,wr,re,
 end
 
 endmodule
-
-

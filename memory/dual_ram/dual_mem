@@ -16,4 +16,3 @@ data_out <= 1'd0;
 end
 
 endmodule
-
