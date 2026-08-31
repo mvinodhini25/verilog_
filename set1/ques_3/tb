@@ -1,0 +1,19 @@
+module tb;
+wire s,cout;
+reg a,b,cin;
+
+fa ff(.a(a),.b(b),.cin(cin),.s(s),.cout(cout));
+
+initial begin
+a=1;b=0;cin=1;#10;
+a=1;b=1;cin=1;#10;
+$finish;
+end
+
+initial begin
+$monitor("time=%0t,a=%0b,b=%0b,cin=%0b,s=%0b,cout=%0b",$time,a,b,cin,s,cout);
+$dumpfile("fulladder.vcd");
+$dumpvars(0,tb);
+end
+
+endmodule

@@ -1,0 +1,31 @@
+module tb;
+wire q,q1;
+reg clk,rst,d;
+
+dff df(.clk(clk),.rst(rst),.d(d),.q(q),.q1(q1));
+
+initial begin
+clk = 0;
+forever #10 clk = ~clk;
+end
+
+initial begin
+rst=1;
+d=1;
+#10;
+
+rst=0;
+d=1;
+#10;
+
+d=0;
+#10;
+
+$finish;
+end
+
+initial begin
+$monitor("time=%0t,clk=%0b,rst=%0b,d=%0b,q=%0b,q1=%0b",$time,clk,rst,d,q,q1);
+end
+
+endmodule

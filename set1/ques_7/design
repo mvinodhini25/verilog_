@@ -1,0 +1,14 @@
+module dff(input clk,rst,d,output reg q,q1);
+always@(posedge clk or posedge rst) begin
+if(rst) begin
+q<=0;
+q1<=0;
+end
+else begin
+q<=d;
+q1<=~d;
+end
+end
+
+endmodule
+

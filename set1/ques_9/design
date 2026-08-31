@@ -1,0 +1,4 @@
+module sr_de (input s,r,output q,q1);
+assign q = ~(r|q1);
+assign q1 = ~(s|q);
+endmodule

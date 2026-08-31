@@ -1,0 +1,20 @@
+module tb;
+wire [3:0]s;
+wire [4:0]carry;
+wire cout;
+reg [3:0]a,b;
+reg cin;
+
+rca rc(.a(a),.b(b),.cin(cin),.s(s),.cout(cout),.carry(carry));
+
+initial begin
+a=4'b1001;b=4'b0010;cin=1;#10;
+a=4'b0001;b=4'b0010;cin=1;#10;
+$finish;
+end
+
+initial begin
+$monitor("time=%0t,a=%0b,b=%0b,cin=%0b,s=%0b,carry=%0b,cout=%0b",$time,a,b,cin,s,carry,cout);
+end
+
+endmodule

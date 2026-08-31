@@ -1,0 +1,31 @@
+module tb;
+wire [2:0]q;
+reg clk,rst,d;
+
+up_down c1(.clk(clk),.rst(rst),.d(d),.q(q));
+
+initial begin
+clk = 0;
+forever #10 clk = ~clk;
+end
+
+initial begin
+rst = 1;
+#20;
+
+rst=0;
+d=1;
+#160;
+
+rst=0;
+d=0;
+#160;
+
+$finish;
+end
+
+initial begin
+$monitor("time=%0t,clk=%0b,rst=%0b,d=%0d,q=%0d",$time,clk,rst,d,q);
+end
+
+endmodule
