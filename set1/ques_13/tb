@@ -1,8 +1,8 @@
 module tb;
 wire y;
-reg clk,rst,a;
+reg clk,rst,load;
 
-seq s1(.a(a),.clk(clk),.rst(rst),.y(y));
+seq s1(.load(load),.clk(clk),.rst(rst),.y(y));
 
 initial begin
 clk = 0;
@@ -11,27 +11,27 @@ end
 
 initial begin
 rst = 1;
-a = 1;
+load = 1;
 #20;
 
 rst = 0;
-a = 0;
+load = 0;
 #20;
-a = 1;
+load = 1;
 #20;
-a = 0;
+load = 0;
 #20;
-a = 1;
+load = 1;
 #20;
-a = 1;
+load = 1;
 #20;
 
 $finish;
 end
 
 initial begin
-$monitor("time=%0t,clk=%0b,rst=%0b,a=%0b,y=%0b",$time,clk,rst,a,y);
+$monitor("time=%0t,clk=%0b,rst=%0b,load=%0b,y=%0b",$time,clk,rst,load,y);
 end
 
-endmodule
+endmodule 
 

@@ -1,5 +1,7 @@
 //SEQUENCE DETECTOR
 
+/* 	WITH FSM
+
 module seq(input a,input clk,rst,output y);
 
 reg [1:0]state,next;
@@ -46,5 +48,22 @@ endcase
 end
 
 assign y = (state == s4);
+
+endmodule  */
+
+// WITHOUT FSM
+
+
+module seq(input load,clk,rst,output y);
+reg [3:0]shift;
+
+always@(posedge clk) begin
+if(rst) 
+shift <= 4'd0;
+else 
+shift <= {shift[2:0],load};
+end
+
+assign y = (shift == 4'b1011);
 
 endmodule
