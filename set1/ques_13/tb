@@ -1,0 +1,37 @@
+module tb;
+wire y;
+reg clk,rst,a;
+
+seq s1(.a(a),.clk(clk),.rst(rst),.y(y));
+
+initial begin
+clk = 0;
+forever #10 clk = ~clk;
+end
+
+initial begin
+rst = 1;
+a = 1;
+#20;
+
+rst = 0;
+a = 0;
+#20;
+a = 1;
+#20;
+a = 0;
+#20;
+a = 1;
+#20;
+a = 1;
+#20;
+
+$finish;
+end
+
+initial begin
+$monitor("time=%0t,clk=%0b,rst=%0b,a=%0b,y=%0b",$time,clk,rst,a,y);
+end
+
+endmodule
+
