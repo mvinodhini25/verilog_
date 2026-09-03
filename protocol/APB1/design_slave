@@ -1,0 +1,27 @@
+module slave(input clk, rst, input [7:0]pwdata, paddr, input pselx, penable, pwrite, output reg pready, output reg [7:0]prdata);
+
+reg [7:0] mem;
+
+
+always@(posedge clk) begin
+	if(!rst) begin
+		prdata <= 8'd0;
+		pready <= 1'd0;
+		mem <= 8'd0;
+	end
+	else begin
+		pready <= 0;
+	
+		if(pselx && penable) begin
+			pready <= 1;
+	
+			if(pwrite)
+				mem <= pwdata;
+			else
+				prdata <= mem;
+		end
+    	end
+end
+
+endmodule	
+		

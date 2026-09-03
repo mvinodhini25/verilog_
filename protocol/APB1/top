@@ -1,0 +1,14 @@
+module apb_top(input clk, rst, in, write, input [7:0]wdata, addr, output [7:0]rdata);
+wire [7:0] paddr;
+wire [7:0] pwdata;
+wire pwrite, pselx, penable;
+wire [7:0] prdata;
+wire pready;
+
+master a2(.clk(clk), .rst(rst), .in(in), .write(write), .wdata(wdata), .addr(addr), .prdata(prdata), .pready(pready), .paddr(paddr), .pwrite(pwrite), .pselx(pselx), .penable(penable), .pwdata(pwdata), .rdata(rdata));
+
+
+slave a1(.clk(clk), .rst(rst), .prdata(prdata), .pready(pready), .paddr(paddr), .pwrite(pwrite), .pselx(pselx), .penable(penable), .pwdata(pwdata));
+
+endmodule
+

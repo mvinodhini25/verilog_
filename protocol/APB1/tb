@@ -1,0 +1,55 @@
+module tb;
+reg clk;
+reg rst;
+reg [7:0] wdata;
+reg [7:0] addr;
+reg in;
+reg write;
+
+wire [7:0] rdata;
+
+apb_top a1(.clk(clk),.rst(rst),.wdata(wdata),.addr(addr),.in(in),.write(write),.rdata(rdata));
+
+initial begin
+clk = 0;
+forever #5 clk = ~clk;
+end
+
+initial begin
+rst = 0;
+wdata = 8'd7;
+addr = 8'd3;
+in = 1;
+write = 1;
+#10;
+
+ rst = 1;
+
+// WRITE
+wdata = 8'd12;
+addr = 8'd38;
+write = 1;
+in = 1;
+#10;
+
+in = 0;
+#40;
+
+
+// READ
+addr = 8'd38;
+write = 0;
+in = 1;
+#10;
+
+in = 0;
+#40;
+
+$finish;
+end
+
+initial begin
+$monitor("time=%0t, clk=%0b, rst=%0b, wdata=%0d, addr=%0d, in=%0b, write=%0b, rdata=%0d",$time,clk,rst,wdata,addr,in,write,rdata);
+end
+
+endmodule
