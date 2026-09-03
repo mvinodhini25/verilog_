@@ -1,0 +1,71 @@
+module tb;
+reg clk;
+reg rst;
+reg [7:0] wdata;
+reg [7:0] addr;
+reg pready;
+reg in;
+reg write;
+
+wire [7:0] paddr;
+wire pselx;
+wire penable;
+wire [7:0] pwdata;
+wire [7:0] prdata;
+
+apb a1(.clk(clk),.rst(rst),.wdata(wdata),.addr(addr),.pready(pready),.in(in),.write(write),.paddr(paddr),.pselx(pselx),.penable(penable),.pwdata(pwdata),.prdata(prdata));
+
+initial begin
+clk = 0;
+forever #5 clk = ~clk;
+end
+
+initial begin
+rst = 0;
+wdata = 8'd7;
+addr = 8'd3;
+pready = 0;
+in = 1;
+write = 1;
+#10;
+
+ rst = 1;
+
+// WRITE
+wdata = 8'd12;
+addr = 8'd38;
+write = 1;
+in = 1;
+pready = 0;
+
+#10;
+in = 0;
+
+#10;
+pready = 1;
+
+#10;
+pready = 0;
+
+
+// READ
+addr = 8'd38;
+write = 0;
+in = 1;
+
+#10;
+in = 0;
+
+#10;
+pready = 1;
+
+#10;
+pready = 0;
+$finish;
+end
+
+initial begin
+$monitor("time=%0t,clk=%0b,rst=%0b,wdata=%0d,addr=%0d,pready=%0b,in=%0b,write=%0b,paddr=%0d,pselx=%0b,penable=%0b,pwdata=%0d,prdata=%0d",$time,clk,rst,wdata,addr,pready,in,write,paddr,pselx,penable,pwdata,prdata);
+end
+
+endmodule
