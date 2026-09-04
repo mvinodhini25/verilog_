@@ -33,7 +33,7 @@ in = 1;
 #10;
 
 in = 0;
-#40;
+#60;
 
 
 // READ
@@ -43,13 +43,18 @@ in = 1;
 #10;
 
 in = 0;
-#40;
+#60;
 
 $finish;
 end
 
 initial begin
 $monitor("time=%0t, clk=%0b, rst=%0b, wdata=%0d, addr=%0d, in=%0b, write=%0b, rdata=%0d",$time,clk,rst,wdata,addr,in,write,rdata);
+end
+
+initial begin
+$dumpfile("apb_top.vcd");
+$dumpvars(0,tb);
 end
 
 endmodule
