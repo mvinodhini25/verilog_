@@ -7,8 +7,9 @@ reg in;
 reg write;
 
 wire [7:0] rdata;
+wire pready;
 
-apb_top a1(.clk(clk),.rst(rst),.wdata(wdata),.addr(addr),.in(in),.write(write),.rdata(rdata));
+apb_top a1(.clk(clk),.rst(rst),.wdata(wdata),.addr(addr),.in(in),.write(write),.rdata(rdata),.pready(pready));
 
 initial begin
 clk = 0;
@@ -44,12 +45,11 @@ in = 1;
 
 in = 0;
 #60;
-
 $finish;
 end
 
 initial begin
-$monitor("time=%0t, clk=%0b, rst=%0b, wdata=%0d, addr=%0d, in=%0b, write=%0b, rdata=%0d",$time,clk,rst,wdata,addr,in,write,rdata);
+$monitor("time=%0t, clk=%0b, rst=%0b, wdata=%0d, addr=%0d, in=%0b, write=%0b, rdata=%0d, pready=%0b",$time,clk,rst,wdata,addr,in,write,rdata,pready);
 end
 
 initial begin
