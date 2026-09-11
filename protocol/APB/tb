@@ -68,4 +68,9 @@ initial begin
 $monitor("time=%0t,clk=%0b,rst=%0b,wdata=%0d,addr=%0d,pready=%0b,in=%0b,write=%0b,paddr=%0d,pselx=%0b,penable=%0b,pwdata=%0d,prdata=%0d",$time,clk,rst,wdata,addr,pready,in,write,paddr,pselx,penable,pwdata,prdata);
 end
 
+initial begin
+$dumpfile("apb.vcd");
+$dumpvars(0,tb);
+end
+
 endmodule

@@ -1,60 +1,100 @@
-module master(input clk, rst, input [7:0]wdata, addr, prdata, input pready, in, write, output reg [7:0]paddr, output reg pselx, penable, output reg pwrite, output  reg [7:0]pwdata, rdata);
+module master(
+input clk,
+input rst,
+input write,
+input in,
+input [7:0] addr,
+input [7:0] wdata,
 
-reg [1:0]state;
+input pready,
+input [7:0] prdata,
 
-localparam idle=2'd0, setup=2'd1, access=2'd2;
 
-always@(posedge clk) begin
-if(!rst) begin
-state <= idle;
-paddr <= 8'd0;
-pselx <= 1'd0;
-penable <= 1'd0;
-pwdata <= 8'd0;
-rdata <= 8'd0;
+output reg pselx,penable,pwrite,
+output reg [7:0] paddr,
+output reg [7:0] pwdata,
+output reg [7:0] rdata
+);
+
+localparam IDLE =2'b00,SETUP=2'b01,ACCESS=2'b10;
+
+reg [1:0] state,next;
+
+// STATE LOGIC
+always @(posedge clk) begin
+if(rst)  begin
+state<=IDLE;
+rdata<=8'b0;
 end
+
 else begin
+state<=next;
+if(state==ACCESS && pready && !pwrite)
+	rdata<=prdata;
+end
+end
+
+//NEXTSTATE LOGIC
+always @(*) begin
 case(state)
-
-idle : begin
-        pselx <= 0;
-        if(in) begin
-          state <= setup;
-        end
-        else
-          state <= idle;
+IDLE: begin
+if(in) 
+next=SETUP;
+else
+next=IDLE;
 end
-
-setup : begin
-        pselx <= 1;
-	paddr <= addr;
-        pwrite <= write;
-	
-	if(write)
-		pwdata <= wdata;
-	
-	penable <= 0;
-        state <= access;
+SETUP: begin
+next=ACCESS;
 end
-
-access : begin
-        pselx <= 1;
-        penable <= 1;
-
-        if(pready) begin
-                pselx <= 0;
-                penable <= 0;
-                
-                if(!write)
-                    rdata <= prdata;
-		state <= idle;   
-        end
-        else
-                state <= access;
+ACCESS: begin
+if(pready) begin
+if(in)
+next=SETUP;
+else
+next=IDLE;
 end
-        default : state <= idle;
+else 
+next=ACCESS;
+end
+default:
+	next=IDLE;
 endcase
 end
-end
 
+//OUTPUT LOGIC
+always @(*) begin
+    pselx    = 0;
+    penable = 0;
+    pwrite  = 0;
+    paddr   = 0;
+    pwdata  = 0;
+
+    case(state)
+        IDLE: begin
+            pselx = 0;
+            penable = 0;
+        end
+
+        SETUP: begin
+            pselx = 1;
+            penable = 0;
+            pwrite = write;
+            paddr = addr;
+            pwdata = wdata;
+        end
+
+        ACCESS: begin
+            pselx = 1;
+            penable = 1;
+            pwrite = write;
+            paddr = addr;
+            pwdata = wdata;
+        end
+	default: begin
+		pselx=0;
+		penable=0;
+	end
+
+    endcase
+end
 endmodule

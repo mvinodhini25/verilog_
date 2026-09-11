@@ -11,4 +11,3 @@ master a2(.clk(clk), .rst(rst), .in(in), .write(write), .wdata(wdata), .addr(add
 slave a1(.clk(clk), .rst(rst), .prdata(prdata), .pready(pready), .paddr(paddr), .pwrite(pwrite), .pselx(pselx), .penable(penable), .pwdata(pwdata));
 
 endmodule
-

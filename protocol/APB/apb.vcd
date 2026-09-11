@@ -1,0 +1,146 @@
+$date
+	Fri Sep 11 20:56:42 2026
+$end
+$version
+	Icarus Verilog
+$end
+$timescale
+	1s
+$end
+$scope module tb $end
+$var wire 8 ! pwdata [7:0] $end
+$var wire 1 " pselx $end
+$var wire 8 # prdata [7:0] $end
+$var wire 1 $ penable $end
+$var wire 8 % paddr [7:0] $end
+$var reg 8 & addr [7:0] $end
+$var reg 1 ' clk $end
+$var reg 1 ( in $end
+$var reg 1 ) pready $end
+$var reg 1 * rst $end
+$var reg 8 + wdata [7:0] $end
+$var reg 1 , write $end
+$scope module a1 $end
+$var wire 8 - addr [7:0] $end
+$var wire 1 ' clk $end
+$var wire 1 ( in $end
+$var wire 1 ) pready $end
+$var wire 1 * rst $end
+$var wire 8 . wdata [7:0] $end
+$var wire 1 , write $end
+$var parameter 2 / access $end
+$var parameter 2 0 idle $end
+$var parameter 2 1 setup $end
+$var reg 8 2 mem [7:0] $end
+$var reg 8 3 paddr [7:0] $end
+$var reg 1 $ penable $end
+$var reg 8 4 prdata [7:0] $end
+$var reg 1 " pselx $end
+$var reg 8 5 pwdata [7:0] $end
+$var reg 2 6 state [1:0] $end
+$var reg 1 7 write_reg $end
+$upscope $end
+$upscope $end
+$enddefinitions $end
+$comment Show the parameter values. $end
+$dumpall
+b1 1
+b0 0
+b10 /
+$end
+#0
+$dumpvars
+x7
+bx 6
+bx 5
+bx 4
+bx 3
+bx 2
+b111 .
+b11 -
+1,
+b111 +
+0*
+0)
+1(
+0'
+b11 &
+bx %
+x$
+bx #
+x"
+bx !
+$end
+#5
+b0 2
+07
+b0 #
+b0 4
+b0 !
+b0 5
+0$
+0"
+b0 %
+b0 3
+b0 6
+1'
+#10
+0'
+b100110 &
+b100110 -
+b1100 +
+b1100 .
+1*
+#15
+b1 6
+17
+b1100 !
+b1100 5
+b100110 %
+b100110 3
+1'
+#20
+0'
+0(
+#25
+b10 6
+1"
+1'
+#30
+0'
+1)
+#35
+b1100 2
+b0 6
+0"
+0$
+1'
+#40
+0'
+1(
+0,
+0)
+#45
+b1 6
+07
+1'
+#50
+0'
+0(
+#55
+b10 6
+1"
+1'
+#60
+0'
+1)
+#65
+b1100 #
+b1100 4
+b0 6
+0"
+0$
+1'
+#70
+0'
+0)
