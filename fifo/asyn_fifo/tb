@@ -48,14 +48,15 @@ data_in = 8'd20;
 #10;
 
 wr_en = 0;
-#20;
+#10;
 
 rd_en = 1;
 #40;
 
 rd_en = 0;
 #20;
-
+rd_en = 1;
+#40;
 $finish;
 end
 

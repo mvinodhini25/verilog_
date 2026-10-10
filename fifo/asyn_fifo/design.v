@@ -12,25 +12,25 @@ output reg [7:0] data_out
 reg [7:0]mem[3:0];
 
 //WRITE
-reg [3:0]wr_ptr, wr_gray, wr_ff1,wr_ff2;
-wire [3:0] wr_ptr_nxt, wr_gray_nxt;
+reg [2:0]wr_ptr,wr_gray, wr_ff1,wr_ff2;
+wire [2:0] wr_ptr_nxt, wr_gray_nxt;
 
 
 //READ
-reg [3:0]rd_ptr, rd_gray, rd_ff1, rd_ff2;
-wire [3:0] rd_ptr_nxt, rd_gray_nxt;
+reg [2:0]rd_ptr, rd_gray, rd_ff1, rd_ff2;
+wire [2:0] rd_ptr_nxt, rd_gray_nxt;
 
 //WRITE
-assign wr_ptr_nxt = wr_ptr + ((wr_en && !full)?1'b1:1'b0);
+assign wr_ptr_nxt = wr_ptr + ((wr_en && !full)?3'b1:3'b0);
 assign wr_gray_nxt = wr_ptr_nxt ^ (wr_ptr_nxt>>1);
 
-always@(posedge wr_clk or wr_rst) begin
+always@(posedge wr_clk or posedge wr_rst) begin
 if(wr_rst) begin
 rd_ff1 <= 4'd0;
 rd_ff2 <= 4'd0;
 end
 else begin
-rd_ff1 <= rd_gray_nxt;
+rd_ff1 <= rd_gray;
 rd_ff2 <= rd_ff1;
 end
 end
@@ -41,7 +41,7 @@ wr_gray <= 4'd0;
 end
 else begin
 if(wr_en && !full)begin
-mem[wr_ptr] <= data_in;
+mem[wr_ptr[1:0]] <= data_in;
 end
 wr_ptr <= wr_ptr_nxt;
 wr_gray <= wr_gray_nxt;
@@ -49,7 +49,7 @@ end
 end
 
 //READ
-assign rd_ptr_nxt = rd_ptr + ((rd_en && !empty)?1'b1:1'b0);
+assign rd_ptr_nxt = rd_ptr + ((rd_en && !empty)?3'b1:3'b0);
 assign rd_gray_nxt = rd_ptr_nxt ^ (rd_ptr_nxt>>1);
 
 always@(posedge rd_clk or posedge rd_rst) begin
@@ -58,26 +58,27 @@ wr_ff1 <= 4'd0;
 wr_ff2 <= 4'd0;
 end
 else begin
-wr_ff1 <= wr_gray_nxt;
+wr_ff1 <= wr_gray;
 wr_ff2 <= wr_ff1;
 end
 end
 
-always@(posedge rd_clk or rd_rst) begin
+always@(posedge rd_clk or posedge rd_rst) begin
 if(rd_rst) begin
 rd_ptr <= 4'd0;
 rd_gray <= 4'd0;
+data_out <= 8'd0;
 end
 else begin
 if(rd_en && !empty)begin
-data_out <= mem[rd_ptr];
+data_out <= mem[rd_ptr[1:0]];
 end
 rd_ptr <= rd_ptr_nxt;
 rd_gray <= rd_gray_nxt;
 end
 end
-assign full = ({~rd_ff2[3:2],rd_ff2[1:0]} == wr_ptr_nxt);
-assign empty = (rd_ptr == wr_ff2);
+assign full = ({~rd_ff2[2:1],rd_ff2[0]} == wr_gray);
+assign empty = (rd_gray == wr_ff2);
 
 
 endmodule
