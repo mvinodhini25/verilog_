@@ -2,10 +2,10 @@ module fifo(
 //WRITE
 input wr_clk,wr_rst,wr_en,
 input [7:0]data_in,
-output full,
+output reg full,
 //READ
 input rd_clk,rd_rst,rd_en,
-output empty,
+output reg empty,
 output reg [7:0] data_out
 );
 
@@ -65,8 +65,8 @@ end
 
 always@(posedge rd_clk or posedge rd_rst) begin
 if(rd_rst) begin
-rd_ptr <= 4'd0;
-rd_gray <= 4'd0;
+rd_ptr <= 3'd0;
+rd_gray <= 3'd0;
 data_out <= 8'd0;
 end
 else begin
@@ -77,10 +77,33 @@ rd_ptr <= rd_ptr_nxt;
 rd_gray <= rd_gray_nxt;
 end
 end
-assign full = ({~rd_ff2[2:1],rd_ff2[0]} == wr_gray);
-assign empty = (rd_gray == wr_ff2);
 
+wire full_next;
+wire empty_next;
+
+assign full_next =
+    (wr_gray_nxt == {~rd_ff2[2:1], rd_ff2[0]});
+
+assign empty_next =
+    (rd_gray_nxt == wr_ff2);
+
+always @(posedge wr_clk or posedge wr_rst) begin
+    if (wr_rst)
+        full <= 1'b0;
+    else
+        full <= full_next;
+end
+
+always @(posedge rd_clk or posedge rd_rst) begin
+    if (rd_rst)
+        empty <= 1'b1;
+    else
+        empty <= empty_next;
+end
 
 endmodule
 
                                   
+
+
+

@@ -19,45 +19,57 @@ initial begin
     rd_clk = 0;
     forever #5 rd_clk = ~rd_clk;
 end
-
 initial begin
-wr_rst = 1;
-rd_rst = 1;
-wr_en = 0;
-rd_en = 0;
-data_in = 8'd6;
-#20;
+    wr_rst  = 1'b1;
+    rd_rst  = 1'b1;
+    wr_en   = 1'b0;
+    rd_en   = 1'b0;
+    data_in = 8'd0;
 
-wr_rst = 0;
-rd_rst = 0;
+    #20;
+    wr_rst = 1'b0;
+    rd_rst = 1'b0;
 
-wr_en = 1;
-data_in = 8'd6;
-#10;
+    // Write 6
+    @(negedge wr_clk);
+    wr_en   = 1'b1;
+    data_in = 8'd6;
 
-wr_en = 1;
-data_in = 8'd10;
-#10;
+    // Write 10
+    @(negedge wr_clk);
+    data_in = 8'd10;
 
-wr_en = 1;
-data_in = 8'd16;
-#10;
+    // Write 16
+    @(negedge wr_clk);
+    data_in = 8'd16;
 
-wr_en = 1;
-data_in = 8'd20;
-#10;
+    // Write 20
+    @(negedge wr_clk);
+    data_in = 8'd20;
 
-wr_en = 0;
-#10;
+    // Stop writing
+    @(negedge wr_clk);
+    wr_en = 1'b0;
 
-rd_en = 1;
-#40;
+    // Wait until data is available
+    wait (empty == 1'b0);
 
-rd_en = 0;
-#20;
-rd_en = 1;
-#40;
-$finish;
+    // Read all four FIFO entries
+    repeat(4) begin
+    @(negedge rd_clk);
+        rd_en = 1'b1;
+
+        @(posedge rd_clk);
+        #1;
+
+        @(negedge rd_clk);
+        rd_en = 1'b0;
+end
+    // Wait for the empty flag to update
+    repeat (4) @(posedge wr_clk);
+    #1;
+
+    $finish;
 end
 
 initial begin
